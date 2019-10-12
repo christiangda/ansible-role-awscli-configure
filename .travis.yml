@@ -1,0 +1,56 @@
+---
+language: python
+python:
+  - "2.7"
+  - "3.6"
+
+services: docker
+
+branches:
+  only:
+    - master
+    - develop
+
+env:
+  global:
+    - GITHUB_ROLE_NAME="ansible-role-awscli-configure"
+    - GALAXY_ROLE_NAME="christiangda.awscli_configure"
+  matrix:
+    - ANSIBLE_VERSION=">=2.8.1,<2.9"
+    - ANSIBLE_VERSION=">=2.7,<2.8"
+    - ANSIBLE_VERSION=">=2.6,<2.7"
+    - ANSIBLE_VERSION=">=2.5,<2.6"
+
+install:
+  - pip install ansible"${ANSIBLE_VERSION}"
+  # - pip install molecule
+  - pip install molecule">=2.22rc1"
+  - pip install docker
+  - pip install flake8
+  - pip install selinux
+  - pip install docker
+  - pip install pylint
+  - pip install rope
+
+before_script:
+  - ls -la
+  - cd ../
+  - ls -la
+  - mv $GITHUB_ROLE_NAME $GALAXY_ROLE_NAME
+  - cd $GALAXY_ROLE_NAME
+
+script:
+  - molecule --version
+  - ansible --version
+  - molecule test
+
+notifications:
+  webhooks:
+    if: branch = master
+    urls:
+      - https://galaxy.ansible.com/api/v1/notifications/
+    on_success: always
+    on_failure: never
+    on_start: never
+    on_cancel: never
+    on_error: never
