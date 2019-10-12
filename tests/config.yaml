@@ -1,0 +1,22 @@
+---
+config:
+  - default:
+      region: us-west-2
+      output: json
+  - profile development:
+      role_arn: arn:aws:iam::123456789012:role/role-name
+      role_session_name: maria_garcia_role
+      source_profile: production-profile
+      aws_session_token: AQoEXAMPLEH4aoAH0gNCAPyJxz4BlCFFxWNE1OPTgk5TthT+FvwqnKwRcOIfrRh3c/LTo6UDdyJwOOvEVPvLXCrrrUtdnniCEXAMPLE/IvU1dYUg2RVAJBanLiHb4IgRmpRV3zrkuWJOgQs8IZZaIv2BXIa2R4Olgk
+      s3:
+        max_concurrent_requests: 20
+        max_queue_size: 10000
+        multipart_threshold: 64MB
+        multipart_chunksize: 16MB
+        max_bandwidth: 50MB/s
+        use_accelerate_endpoint: true
+        addressing_style: path
+      api_versions:
+        ec2: 2015-03-01
+        cloudfront: 2015-09-017
+      tcp_keepalive: false
