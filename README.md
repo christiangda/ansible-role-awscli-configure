@@ -1,11 +1,13 @@
 # Ansible Role: christiangda.awscli
 
 [![Build Status](https://travis-ci.org/christiangda/ansible-role-awscli_configure.svg?branch=master)](https://travis-ci.org/christiangda/ansible-role-awscli-configure)
-[![Ansible Role](https://img.shields.io/ansible/role/40514.svg)](https://galaxy.ansible.com/christiangda/awscli_configure)
+[![Ansible Role](https://img.shields.io/ansible/role/44078.svg)](https://galaxy.ansible.com/christiangda/awscli_configure)
 
 This role create the necessary files to [configure AWS Command Line Interface (awscli)](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
 
 This roles is very basic, its only function is transform a variable defined in `yaml` format with the content of the `.aws/config` and `.aws/credentials` files to the `.ini` file format and put those in the place you want.
+
+See the examples to understand it.
 
 ## Requirements
 
