@@ -1,17 +1,17 @@
-{%- for config_dict  in config.values() -%}
-{%- for l1 in config_dict -%}
-{%- for l1_keys, l1_values in l1.items() -%}
-[{{l1_keys}}]
-{%- for l2_keys, l2_values in l1_values.items() -%}
-{% if l2_values is not mapping %}
-{{l2_keys}} = {{l2_values}}
-{%- else %}
-{{l2_keys}} =
-{%- for l3_keys, l3_values in l2_values.items() %}
-  {{l3_keys}} = {{l3_values}}
-{%- endfor %}
-{%- endif -%}
+# {{ ansible_managed }}
+{% for config_dict in awscliconf_valid_config_file | from_yaml %}
+{% for section, section_values in config_dict.items() %}
+[{{ section }}]
+{% for key, value  in section_values.items() %}
+{% if value is not mapping %}
+{{key}} = {{value}}
+{% else %}
+{{key}} =
+{% for sub_key, sub_value in value.items() %}
+  {{sub_key}} = {{sub_value}}
 {% endfor %}
+{% endif %}
 {% endfor %}
+
 {% endfor %}
 {% endfor %}

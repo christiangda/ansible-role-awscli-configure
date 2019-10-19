@@ -44,5 +44,8 @@ galaxy_info:
     - awscli
     - profile
     - configuration
+    - configure
+    - profile
+    - awscli
 
 dependencies: []
