@@ -44,6 +44,7 @@ script:
   - molecule test
 
 stages:
+  - name: Test
   - name: GitHub Release
     if: branch = master
 
