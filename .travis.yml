@@ -44,6 +44,30 @@ script:
   - ansible --version
   - molecule test
 
+before_deploy:
+  - export COMMITTER_EMAIL="$(git log -1 $TRAVIS_COMMIT --pretty="%cE")"
+  - export AUTHOR_NAME="$(git log -1 $TRAVIS_COMMIT --pretty="%aN")"
+  - export VERSION_TAG=$(cat VERSION)
+  - echo "$VERSION_TAG" "$TRAVIS_COMMIT"
+  - git config --local user.name "$AUTHOR_NAME"
+  - git config --local user.email "$COMMITTER_EMAIL"
+  - git tag -a $VERSION_TAG -m "$TRAVIS_COMMIT"
+  - git tag -l
+
+deploy:
+  - provider: releases
+    tag_name: "$VERSION_TAG"
+    target_commitish: "$TRAVIS_COMMIT"
+    name: "$VERSION_TAG"
+    #overwrite: false
+    skip_cleanup: true
+    api_key:
+      secure: TlCKsdP/GM96ZYjdTPSZ8PXDFTGyC5yRVtHQNTr2fu0aDiw5fDkQX9BEz4ZyCq5XHoLv1yQhYSyL+7FcRtSg/+OEnbgKhuzjVvevtADZkiGZTzF6Krzz5Dqj+FEhNAv2UqAGEfqLdLQwKDhpSR6y4h8WSwB8nveCgN1ozGuHlqkcr0qj2sFNtyBvMKpL5YkWrymZd//zApXW0Mu2jpTp1ridUnbQ7UpJxlWfP074Kna+MFsoxOlBQ1YjtbmClqCicmPJuJPkB28RAtfv+T1yFVfXtCyt4GkHSuMpCFoQo54+5jJpRmvnVM3SQ1H1huAuw0pgcRoPASfUztWlL4+3VrU/RpJJhu9+JNoF7aU5GsvJ7fThvp0rBtXF9LZMqZo+JdouS2/LWRW3CBnhkjwMni/3QRaPu5ndUN7lTVnme+GdqLqWYeL8mq4UMZ/NY3f7Xxk8KGJ0V7d9FE22NoIUehBPY4yRzyeExUyc7qWDX2+Kd7fjpyY+vwhiFLaj121jA11/qF9RFtBpfFM0VUlRUuPtAPr/fKx0o/iMQCOvT56DiFEo11o6eFBGFNZJYFhznx7tFOzlrtyA+tro+3kTavXPz7j/TNnMsWME3hRBy9xTa1dqblaV9G9n96ut2m25Ef+oKWHt6no13lMlSjC9bjRMWsSIox+oXFDscIziVp4=
+    file: "*"
+    on:
+      repo: christiangda/$GITHUB_ROLE_NAME
+      branch: master
+
 notifications:
   webhooks:
     if: branch = master
