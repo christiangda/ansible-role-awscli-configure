@@ -1,78 +1,68 @@
----
 language: python
 python:
-  - "2.7"
-  - "3.6"
-
+- '2.7'
+- '3.6'
 services: docker
-
 branches:
   only:
-    - master
-    - develop
-
+  - master
+  - develop
 env:
   global:
-    - GITHUB_ROLE_NAME="ansible-role-awscli-configure"
-    - GALAXY_ROLE_NAME="christiangda.awscli_configure"
+  - GITHUB_ROLE_NAME="ansible-role-awscli-configure"
+  - GALAXY_ROLE_NAME="christiangda.awscli_configure"
   matrix:
-    - ANSIBLE_VERSION=">=2.8.1,<2.9"
-    - ANSIBLE_VERSION=">=2.7,<2.8"
-    - ANSIBLE_VERSION=">=2.6,<2.7"
-    - ANSIBLE_VERSION=">=2.5,<2.6"
-
+  - ANSIBLE_VERSION=">=2.8.1,<2.9"
+  - ANSIBLE_VERSION=">=2.7,<2.8"
+  - ANSIBLE_VERSION=">=2.6,<2.7"
+  - ANSIBLE_VERSION=">=2.5,<2.6"
 install:
-  - pip install ansible"${ANSIBLE_VERSION}"
-  # - pip install molecule
-  - pip install molecule">=2.22rc1"
-  - pip install docker
-  - pip install flake8
-  - pip install selinux
-  - pip install docker
-  - pip install pylint
-  - pip install rope
-
+- pip install ansible"${ANSIBLE_VERSION}"
+- pip install molecule">=2.22rc1"
+- pip install docker
+- pip install flake8
+- pip install selinux
+- pip install docker
+- pip install pylint
+- pip install rope
 before_script:
-  - ls -la
-  - cd ../
-  - ls -la
-  - mv $GITHUB_ROLE_NAME $GALAXY_ROLE_NAME
-  - cd $GALAXY_ROLE_NAME
-
+- ls -la
+- cd ../
+- ls -la
+- mv $GITHUB_ROLE_NAME $GALAXY_ROLE_NAME
+- cd $GALAXY_ROLE_NAME
 script:
-  - molecule --version
-  - ansible --version
-  - molecule test
-
+- molecule --version
+- ansible --version
+- molecule test
 before_deploy:
-  - export COMMITTER_EMAIL="$(git log -1 $TRAVIS_COMMIT --pretty="%cE")"
-  - export AUTHOR_NAME="$(git log -1 $TRAVIS_COMMIT --pretty="%aN")"
-  - export VERSION_TAG=$(cat VERSION)
-  - echo "$VERSION_TAG" "$TRAVIS_COMMIT"
-  - git config --local user.name "$AUTHOR_NAME"
-  - git config --local user.email "$COMMITTER_EMAIL"
-  - git tag -a $VERSION_TAG -m "$TRAVIS_COMMIT"
-  - git tag -l
-
+- export COMMITTER_EMAIL="$(git log -1 $TRAVIS_COMMIT --pretty="%cE")"
+- export AUTHOR_NAME="$(git log -1 $TRAVIS_COMMIT --pretty="%aN")"
+- export VERSION_TAG=$(cat VERSION)
+- echo "$VERSION_TAG" "$TRAVIS_COMMIT"
+- git config --local user.name "$AUTHOR_NAME"
+- git config --local user.email "$COMMITTER_EMAIL"
+- git tag -a $VERSION_TAG -m "$TRAVIS_COMMIT"
+- git tag -l
 deploy:
-  - provider: releases
-    tag_name: "$VERSION_TAG"
-    target_commitish: "$TRAVIS_COMMIT"
-    name: "$VERSION_TAG"
-    #overwrite: false
-    skip_cleanup: true
-    api_key:
-      secure: TlCKsdP/GM96ZYjdTPSZ8PXDFTGyC5yRVtHQNTr2fu0aDiw5fDkQX9BEz4ZyCq5XHoLv1yQhYSyL+7FcRtSg/+OEnbgKhuzjVvevtADZkiGZTzF6Krzz5Dqj+FEhNAv2UqAGEfqLdLQwKDhpSR6y4h8WSwB8nveCgN1ozGuHlqkcr0qj2sFNtyBvMKpL5YkWrymZd//zApXW0Mu2jpTp1ridUnbQ7UpJxlWfP074Kna+MFsoxOlBQ1YjtbmClqCicmPJuJPkB28RAtfv+T1yFVfXtCyt4GkHSuMpCFoQo54+5jJpRmvnVM3SQ1H1huAuw0pgcRoPASfUztWlL4+3VrU/RpJJhu9+JNoF7aU5GsvJ7fThvp0rBtXF9LZMqZo+JdouS2/LWRW3CBnhkjwMni/3QRaPu5ndUN7lTVnme+GdqLqWYeL8mq4UMZ/NY3f7Xxk8KGJ0V7d9FE22NoIUehBPY4yRzyeExUyc7qWDX2+Kd7fjpyY+vwhiFLaj121jA11/qF9RFtBpfFM0VUlRUuPtAPr/fKx0o/iMQCOvT56DiFEo11o6eFBGFNZJYFhznx7tFOzlrtyA+tro+3kTavXPz7j/TNnMsWME3hRBy9xTa1dqblaV9G9n96ut2m25Ef+oKWHt6no13lMlSjC9bjRMWsSIox+oXFDscIziVp4=
-    file: "*"
-    on:
-      repo: christiangda/$GITHUB_ROLE_NAME
-      branch: master
+- provider: releases
+  tag_name: "$VERSION_TAG"
+  target_commitish: "$TRAVIS_COMMIT"
+  name: "$VERSION_TAG"
+  #overwrite: false
+  skip_cleanup: true
+  api_key:
+      secure: h5/jrJ6ilrcf06bjeqHq3gNoqOvzWlMqgVCZNWDMjZA4AM6PwKNXVKlpctRrHxZy+Pa8gt0jJlhTFNzxHuLwSihOf+ZtlOU5X1M0Mgs4sZnisTfk/ClXO3KQyb6YwRmm98zztVdVtKwe3iuZ52jNa9lLZFZDBAzORsL5Tpg+C6msyP3JXwdeJBPq0pQAR/Y8I3Zz/HzvotVSZHrV8FV61ERA9fxEiQvqEWpGq6ufOTK0F+akyfFIHm1HDOwlHcLtbtmhSELl6mXljRYFZRGfE9GYJzPcFYbhVKzBRXPHE7/z/zjs8J7Jb0Ar3vsjFkDdz8lQyySuCX7/7ENeJFTO+R39uB+Ov6VqjRm0byVISSShil3dQblabTZS6QFdYcqLIehNFsbY2rzjkdd6mRVMKTwNDMvMJeUVMX91Z/CUXG1hyqqmjFHYDJSidpKxdKCZoHrW6G5H543VtiHuLwc6wN9xNjnlmEh89djcAsDTv6UY7vZYzo6ArnehCEI3C4oXxalP5FZlmGA4Zth6fXwTNjOuUGNA72iSnYVH/GtKSnv3wvQEIsdggy5qpNBwyARAthwqKoCbHJzcIue3Vy3Gruz+bgGt9f+miBmp/QbFvGLLFuaE1HtXc1Of+ccX5GHCkRR04qsN7qocdQvGMjARgT/QBLSWdJIwbhg5lZoV/14=
+  file: "*"
+  on:
+    repo: christiangda/$GITHUB_ROLE_NAME
+    branch: master
 
 notifications:
   webhooks:
     if: branch = master
     urls:
-      - https://galaxy.ansible.com/api/v1/notifications/
+    - https://galaxy.ansible.com/api/v1/notifications/
     on_success: always
     on_failure: never
     on_start: never
