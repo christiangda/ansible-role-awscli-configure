@@ -110,6 +110,9 @@ If you have installed [AWS Command Line Interface (awscli)](https://docs.aws.ama
     roles:
       - role: christiangda.awscli_configure
         vars:
+          awscliconf_path: '/home/christian.gonzalez'
+          awscliconf_files_owner: 'christian.gonzalez'
+          awscliconf_files_group: 'christian.gonzalez'
           awscliconf_files:
             credentials:
               - default:
