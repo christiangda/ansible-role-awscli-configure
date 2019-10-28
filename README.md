@@ -1,6 +1,6 @@
 # Ansible Role: christiangda.awscli
 
-[![Build Status](https://travis-ci.org/christiangda/ansible-role-awscli_configure.svg?branch=master)](https://travis-ci.org/christiangda/ansible-role-awscli-configure)
+[![Build Status](https://travis-ci.org/christiangda/ansible-role-awscli-configure.svg?branch=master)](https://travis-ci.org/christiangda/ansible-role-awscli-configure)
 [![Ansible Role](https://img.shields.io/ansible/role/44078.svg)](https://galaxy.ansible.com/christiangda/awscli_configure)
 
 This role create the necessary files to [configure AWS Command Line Interface (awscli)](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
