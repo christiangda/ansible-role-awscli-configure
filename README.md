@@ -7,6 +7,10 @@ This role create the necessary files to [configure AWS Command Line Interface (a
 
 This roles is very basic, its only function is transform a variable defined in `yaml` format with the content of the `.aws/config` and `.aws/credentials` files to the `.ini` file format and put those in the place you want.
 
+The best wayt to install this role is using the command `ansible-galaxy install christiangda.awscli_configure`, the Ansible Galaxy repository is [christiangda.awscli_configure](https://galaxy.ansible.com/christiangda/awscli_configure)
+
+The repository code is [https://github.com/christiangda/ansible-role-awscli-configure](https://github.com/christiangda/ansible-role-awscli-configure)
+
 See the examples to understand it.
 
 ## Requirements
@@ -36,67 +40,19 @@ To see the compatibility matrix of Python vs. Ansible see the project [Travis-CI
 
 ## Role Variables
 
-```yaml
-# Define the path where AWS CLI ".aws"'s folder will be created.
-# NOTE: The folder ".aws" will be created by the role, do not add it to the path
-# By default this will be created in the $HOME path of the user who executes o become in ansible
-# possible values:
-# - https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
-# default value: "~/."
-awscliconf_path: "~/."
-```
+| Variable                           | Default Value  |
+| :-------------------------         | :------------- |
+| awscliconf_path                    | "~/."          |
+| awscliconf_recursive_path_creation | false          |
+| awscliconf_files_owner             | "root"         |
+| awscliconf_files_group             | "root"         |
+| awscliconf_files                   | "" --> Empty   |
 
-```yaml
-# If you use an "awscliconf_path" that doesn't exist in the target, you need to set
-# this variable to "true", in another case the execution will fail
-# NOTE: Unfortunately when you set this variable to "true", the role always sends "change" status.
-# possible values:
-# - true
-# - false
-# default value: false
-awscliconf_recursive_path_creation: false
-```
-
-```yaml
-# The owner user for the folder ".aws" that will be created inside the path defined in "awscliconf_path"
-# possible values:
-# - https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
-# default value: "root"
-awscliconf_files_owner: "root"
-```
-
-```yaml
-# The owner group for the folder ".aws" that will be created inside the path defined in "awscliconf_path"
-# possible values:
-# - https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
-# default value: "root"
-awscliconf_files_group: "root"
-```
-
-```yaml
-# This variable define the content of the two AWS CLI configuration files
-# - .aws/config
-# - .aws/credentials
-# NOTE: If you don't set this variable, some default values will be sets
-# possible values:
-# - https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
-# default values:
-#  config:
-#    - default:
-#        output: json
-#
-#  credentials:
-#    - default:
-#        aws_access_key_id: ''
-#        aws_secret_access_key: ''
-awscliconf_files: ""
-```
+**More Details:** See the file [defaults/main.yaml](defaults/main.yaml)
 
 ## Dependencies
 
-This role has not dependencies, but is important that you [install AWS Command Line Interface (awscli)](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html) in order to make sense of this.
-
-My role [christiangda.awscli](https://galaxy.ansible.com/christiangda/awscli) can help you to [install AWS Command Line Interface (awscli)](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html).
+This role has no dependencies but is important that you [install AWS Command Line Interface (awscli)](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html) in order to make sense of this.  My role [christiangda.awscli](https://galaxy.ansible.com/christiangda/awscli) can help you to [install AWS Command Line Interface (awscli)](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html).
 
 ## Example Playbook
 
@@ -116,8 +72,8 @@ If you have installed [AWS Command Line Interface (awscli)](https://docs.aws.ama
           awscliconf_files:
             credentials:
               - default:
-                  aws_access_key_id: '12345679'
-                  aws_secret_access_key: '123456789'
+                  aws_access_key_id: 'AKIAIOSFODNN7EXAMPLE'
+                  aws_secret_access_key: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
             config:
               - default:
                   region: us-west-2
@@ -142,8 +98,8 @@ If you have installed [AWS Command Line Interface (awscli)](https://docs.aws.ama
           awscliconf_files:
             credentials:
               - default:
-                  aws_access_key_id: '12345679'
-                  aws_secret_access_key: '123456789'
+                  aws_access_key_id: 'AKIAIOSFODNN7EXAMPLE'
+                  aws_secret_access_key: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
             config:
               - default:
                   region: us-west-2
@@ -168,8 +124,8 @@ If you have installed [AWS Command Line Interface (awscli)](https://docs.aws.ama
           awscliconf_files:
             credentials:
               - default:
-                  aws_access_key_id: '12345679'
-                  aws_secret_access_key: '123456789'
+                  aws_access_key_id: 'AKIAIOSFODNN7EXAMPLE'
+                  aws_secret_access_key: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
             config:
               - default:
                   region: us-west-2
@@ -204,12 +160,12 @@ If you have installed [AWS Command Line Interface (awscli)](https://docs.aws.ama
         awscliconf_files:
           credentials:
             - default:
-                aws_access_key_id: '12345679'
-                aws_secret_access_key: '123456789'
+                aws_access_key_id: 'AKIAIOSFODNN7EXAMPLE'
+                aws_secret_access_key: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
 
             - production-profile:
-                aws_access_key_id: '12345679'
-                aws_secret_access_key: '123456789'
+                aws_access_key_id: 'AKIAIOSFODNN7EXAMPLE'
+                aws_secret_access_key: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
           config:
             - default:
                 region: us-west-2
@@ -238,9 +194,9 @@ If you have installed [AWS Command Line Interface (awscli)](https://docs.aws.ama
 This role is tested using [Molecule](https://molecule.readthedocs.io/en/latest/) and was developed using
 [Python Virtual Environments](https://docs.python.org/3/tutorial/venv.html)
 
-**Prepare your environment**
+Prepare your environment
 
-**Python 3**
+* Python 3
 
 ```bash
 mkdir ansible-roles
@@ -250,7 +206,7 @@ python3 -m venv venv
 source venv/bin/activate
 pip install pip --upgrade
 pip install ansible
-pip install molecule">=2.22rc1"
+pip install molecule
 pip install molecule[vagrant]
 pip install selinux
 pip install docker
@@ -263,38 +219,7 @@ pip install yamllint
 pip install flake8
 ```
 
-**Python 2.7**
-
-Dependencies
-
-```bash
-sudo dnf install redhat-rpm-config
-sudo dnf install python-devel
-sudo dnf install libselinux-python
-```
-
-```bash
-mkdir ansible-roles
-cd ansible-roles/
-
-python2.7 -m virtualenv venv
-source venv/bin/activate
-pip install pip --upgrade
-pip install ansible
-pip install molecule">=2.22rc1"
-pip install molecule[vagrant]
-pip install selinux
-pip install docker
-pip install pytest
-pip install pytest-mock
-pip install pylint
-pip install rope
-pip install autopep8
-pip install yamllint
-pip install flake8
-```
-
-**Clone the role repository and create symbolic link**
+Clone the role repository and create symbolic link
 
 ```bash
 git clone https://github.com/christiangda/ansible-role-awscli-configure.git
@@ -302,7 +227,7 @@ ln -s ansible-role-awscli-configure christiangda.awscli_configure
 cd christiangda.awscli_configure
 ```
 
-**Execute the test**
+Execute the test
 
 Using docker in local
 
