@@ -5,7 +5,7 @@ galaxy_info:
   description: Ansible Role to Configure AWS Command Line Interface (awscli)
   license: license GPLv3
   company: No Company
-  min_ansible_version: 2.5
+  min_ansible_version: 2.7
 
   platforms:
     - name: EL

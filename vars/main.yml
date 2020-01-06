@@ -1,11 +1,11 @@
 ---
 # Name and permission for config file
 awscliconf_config_file: "config"
-awscliconf_config_permission: 600
+awscliconf_config_permission: 0600
 
 # Name and permission for credentials file
 awscliconf_credentials_file: "credentials"
-awscliconf_credentials_permission: 600
+awscliconf_credentials_permission: 0600
 
 # AWS CLI folder name and permission, it wil be created inside the path defined in: awscliconf_path var
 awscliconf_folder: ".aws"

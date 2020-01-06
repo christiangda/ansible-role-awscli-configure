@@ -18,23 +18,25 @@ See the examples to understand it.
 This role work on RedHat, CentOS, Debian and Ubuntu distributions
 
 * RedHat
-  * 6
+  * 6 (*)
   * 7
   * 8
 * CentOS
-  * 6
+  * 6 (*)
   * 7
   * 8
 * Ubuntu
-  * 14.*
-  * 16.*
+  * 14.* (*)
+  * 16.* (*)
   * 18.*
   * 19.*
 * Debian
-  * jessie (8)
+  * jessie (8) (*)
   * stretch (9)
   * buster (10)
   * sid (unstable)
+
+**(*)** Out of tests, maybe you find problems with this OS
 
 To see the compatibility matrix of Python vs. Ansible see the project [Travis-CI build matrix](https://travis-ci.org/christiangda/ansible-role-awscli-configure)
 
@@ -232,7 +234,7 @@ Execute the test
 Using docker in local
 
 ```bash
-molecule test [--scenario-name default]
+molecule test
 ```
 
 **Additionally if you want to test it using VMs, I have a very nice [ansible-playground project](https://github.com/christiangda/ansible-playground) that use Vagrant and VirtualBox, try it!.**
