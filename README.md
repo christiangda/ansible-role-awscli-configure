@@ -1,13 +1,14 @@
 # Ansible Role: christiangda.awscli
 
-[![Build Status](https://travis-ci.org/christiangda/ansible-role-awscli-configure.svg?branch=master)](https://travis-ci.org/christiangda/ansible-role-awscli-configure)
+[![Master branch workflow](https://github.com/christiangda/ansible-role-awscli-configure/actions/workflows/master.yaml/badge.svg?branch=master)](https://github.com/christiangda/ansible-role-awscli-configure/actions/workflows/master.yaml)
+[![Develop branch workflow](https://github.com/christiangda/ansible-role-awscli-configure/actions/workflows/develop.yaml/badge.svg?branch=develop)](https://github.com/christiangda/ansible-role-awscli-configure/actions/workflows/develop.yaml)
 [![Ansible Role](https://img.shields.io/ansible/role/44078.svg)](https://galaxy.ansible.com/christiangda/awscli_configure)
 
 This role create the necessary files to [configure AWS Command Line Interface (awscli)](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
 
 This roles is very basic, its only function is transform a variable defined in `yaml` format with the content of the `.aws/config` and `.aws/credentials` files to the `.ini` file format and put those in the place you want.
 
-The best wayt to install this role is using the command `ansible-galaxy install christiangda.awscli_configure`, the Ansible Galaxy repository is [christiangda.awscli_configure](https://galaxy.ansible.com/christiangda/awscli_configure)
+The best way to install this role is using the command `ansible-galaxy install christiangda.awscli_configure`, the Ansible Galaxy repository is [christiangda.awscli_configure](https://galaxy.ansible.com/christiangda/awscli_configure)
 
 The repository code is [https://github.com/christiangda/ansible-role-awscli-configure](https://github.com/christiangda/ansible-role-awscli-configure)
 

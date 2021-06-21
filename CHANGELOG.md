@@ -3,6 +3,7 @@
 ## 0.0.5
 
 * implemented github actions and removed travis-ci
+* added additional molecule scenarios
 
 ## 0.0.4
 
