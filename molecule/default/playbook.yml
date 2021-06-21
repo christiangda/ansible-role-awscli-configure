@@ -1,6 +1,0 @@
----
-- name: Converge
-  hosts: all
-
-  roles:
-    - role: christiangda.awscli_configure
