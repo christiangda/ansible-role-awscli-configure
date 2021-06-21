@@ -1,13 +1,14 @@
 # Ansible Role: christiangda.awscli
 
-[![Build Status](https://travis-ci.org/christiangda/ansible-role-awscli-configure.svg?branch=master)](https://travis-ci.org/christiangda/ansible-role-awscli-configure)
+[![Master branch workflow](https://github.com/christiangda/ansible-role-awscli-configure/actions/workflows/master.yaml/badge.svg?branch=master)](https://github.com/christiangda/ansible-role-awscli-configure/actions/workflows/master.yaml)
+[![Develop branch workflow](https://github.com/christiangda/ansible-role-awscli-configure/actions/workflows/develop.yaml/badge.svg?branch=develop)](https://github.com/christiangda/ansible-role-awscli-configure/actions/workflows/develop.yaml)
 [![Ansible Role](https://img.shields.io/ansible/role/44078.svg)](https://galaxy.ansible.com/christiangda/awscli_configure)
 
 This role create the necessary files to [configure AWS Command Line Interface (awscli)](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
 
 This roles is very basic, its only function is transform a variable defined in `yaml` format with the content of the `.aws/config` and `.aws/credentials` files to the `.ini` file format and put those in the place you want.
 
-The best wayt to install this role is using the command `ansible-galaxy install christiangda.awscli_configure`, the Ansible Galaxy repository is [christiangda.awscli_configure](https://galaxy.ansible.com/christiangda/awscli_configure)
+The best way to install this role is using the command `ansible-galaxy install christiangda.awscli_configure`, the Ansible Galaxy repository is [christiangda.awscli_configure](https://galaxy.ansible.com/christiangda/awscli_configure)
 
 The repository code is [https://github.com/christiangda/ansible-role-awscli-configure](https://github.com/christiangda/ansible-role-awscli-configure)
 
@@ -42,13 +43,13 @@ To see the compatibility matrix of Python vs. Ansible see the project [Travis-CI
 
 ## Role Variables
 
-| Variable                           | Default Value  |
-| :-------------------------         | :------------- |
-| awscliconf_path                    | "~/."          |
-| awscliconf_recursive_path_creation | false          |
-| awscliconf_files_owner             | "root"         |
-| awscliconf_files_group             | "root"         |
-| awscliconf_files                   | "" --> Empty   |
+| Variable                           | Default Value |
+| :--------------------------------- | :------------ |
+| awscliconf_path                    | "~/."         |
+| awscliconf_recursive_path_creation | false         |
+| awscliconf_files_owner             | "root"        |
+| awscliconf_files_group             | "root"        |
+| awscliconf_files                   | "" --> Empty  |
 
 **More Details:** See the file [defaults/main.yaml](defaults/main.yaml)
 
@@ -196,7 +197,25 @@ If you have installed [AWS Command Line Interface (awscli)](https://docs.aws.ama
 This role is tested using [Molecule](https://molecule.readthedocs.io/en/latest/) and was developed using
 [Python Virtual Environments](https://docs.python.org/3/tutorial/venv.html)
 
-Prepare your environment
+Also, we used to main git branch
+
+* master
+* develop
+
+If you want to contribute to this project what you want to do is
+
+* [Fork the project](https://help.github.com/en/github/getting-started-with-github/fork-a-repo)
+* [Prepare your environment](#prepare-your-environment)
+* Fix the problem in `develop` branch
+* Execute `molecule test`
+* Create a Pull Request to official project `develop` branch
+
+References
+
+* [Fork a repo](https://help.github.com/en/github/getting-started-with-github/fork-a-repo)
+* [Creating a pull request from a fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork)
+
+### Prepare your environment
 
 * Python 3
 
@@ -209,7 +228,11 @@ source venv/bin/activate
 pip install pip --upgrade
 pip install ansible
 pip install molecule
-pip install molecule[vagrant]
+pip install 'molecule[docker]'
+pip install 'molecule[podman]'
+pip install 'molecule[lint]'
+pip install molecule-vagrant
+pip install python-vagrant
 pip install selinux
 pip install docker
 pip install pytest
@@ -219,9 +242,10 @@ pip install rope
 pip install autopep8
 pip install yamllint
 pip install flake8
+pip install ansible-lint
 ```
 
-Clone the role repository and create symbolic link
+### Clone the role repository (From your fork) and create symbolic link
 
 ```bash
 git clone https://github.com/christiangda/ansible-role-awscli-configure.git
@@ -229,12 +253,52 @@ ln -s ansible-role-awscli-configure christiangda.awscli_configure
 cd christiangda.awscli_configure
 ```
 
-Execute the test
+### Execute the molecule test
 
-Using docker in local
+Scenarios available:
+
+* default --> `--driver-name docker`
+* podman --> `--driver-name podman`
+* centos-8 --> `--driver-name centos-8`
+* centos-7 --> `--driver-name centos-7`
+* ubuntu-21.04 --> `--driver-name ubuntu-21.04`
+
+#### scenario default
+
+Step by step
 
 ```bash
-molecule test
+molecule create [--scenario-name default]
+molecule converge [--scenario-name default]
+molecule verify [--scenario-name default]
+molecule destroy [--scenario-name default]
+```
+
+or
+
+All in one
+
+```bash
+molecule test [--scenario-name default]
+```
+
+#### scenario podman
+
+Step by step
+
+```bash
+molecule create --scenario-name podman
+molecule converge --scenario-name podman
+molecule verify --scenario-name podman
+molecule destroy --scenario-name podman
+```
+
+or
+
+All in one
+
+```bash
+molecule test --scenario-name podman
 ```
 
 **Additionally if you want to test it using VMs, I have a very nice [ansible-playground project](https://github.com/christiangda/ansible-playground) that use Vagrant and VirtualBox, try it!.**
